@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Zap, Trophy, Shield, ArrowRight, Activity, Cpu, Users, Star, Crown, Check, Play, Sparkles, Smartphone, Watch, ChevronDown, Loader2, BarChart3, Target, Map, Globe, Lock, TrendingUp, Hexagon } from 'lucide-react';
 import MethodologyView from './MethodologyView';
+import ManifestoView from './ManifestoView';
+import CollectiveView from './CollectiveView';
+import PerformanceView from './PerformanceView';
+import CurrencyView from './CurrencyView';
+import PartnershipView from './PartnershipView';
+
+import { Menu, X } from 'lucide-react';
 
 interface Props {
   onJoin: () => void;
@@ -8,12 +15,18 @@ interface Props {
   theme: 'dark' | 'light';
 }
 
+type ViewState =  'manifesto' | 'collective' | 'performance' | 'currency' | 'partnership';
+
 const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showNav, setShowNav] = useState(true);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [showMethodology, setShowMethodology] = useState(false);
+
+  const [currentView, setCurrentView] = useState<ViewState>('landing');
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const HERO_VIDEOS = [
     "https://videos.pexels.com/video-files/3763989/3763989-uhd_2560_1440_25fps.mp4",
@@ -52,21 +65,144 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
     }} onApply={onJoin} />;
   }
 
+    if (currentView === 'manifesto') {
+    return <ManifestoView onBack={() => setCurrentView('landing')} />;
+  }
+  if (currentView === 'collective') {
+    return <CollectiveView onBack={() => setCurrentView('landing')} />;
+  }
+  if (currentView === 'performance') {
+    return <PerformanceView onBack={() => setCurrentView('landing')} />;
+  }
+  if (currentView === 'currency') {
+    return <CurrencyView onBack={() => setCurrentView('landing')} />;
+  }
+  if (currentView === 'partnership') {
+    return <PartnershipView onBack={() => setCurrentView('landing')} />;
+  }
+
   return (
     <div className="min-h-screen bg-off-black text-white selection:bg-neon-volt selection:text-black font-sans overflow-x-hidden">
       
       {/* Sticky Header */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out transform  ${isScrolled ? 'bg-off-black/95 backdrop-blur-md border-b border-white/10 shadow-md' : 'bg-transparent'}`}>
+      {/* <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out transform  ${isScrolled ? 'bg-off-black/95 backdrop-blur-md border-b border-white/10 shadow-md' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 sm:px-0 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2 group cursor-pointer">
             <img src="/lp/logo.png" alt="FUNPACE" className="w-full h-6 object-contain" />
           </div>
           <div className="hidden md:flex items-center gap-8"></div>
           <div className="flex items-center gap-6">
+            <button onClick={() => setCurrentView('manifesto')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Manifesto</button>
+            <button onClick={() => setCurrentView('collective')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Coletivo</button>
+            <button onClick={() => setCurrentView('currency')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Moeda</button>
+            <button onClick={() => setCurrentView('performance')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Performance</button>
+            <button onClick={() => setCurrentView('partnership')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Parcerias</button>
             <button className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Login</button>
           </div>
         </div>
-      </nav>
+      </nav> */}
+
+      <nav
+  className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out
+  ${isScrolled
+    ? 'bg-off-black/95 backdrop-blur-md border-b border-white/10 shadow-md'
+    : 'bg-transparent'
+  }`}
+>
+  <div className="max-w-7xl mx-auto px-6 sm:px-0 py-4 flex justify-between items-center">
+
+    {/* Logo */}
+    <div className="flex items-center gap-2 cursor-pointer">
+      <img src="/lp/logo.png" alt="FUNPACE" className="h-3 object-contain" />
+    </div>
+
+    {/* Desktop Nav */}
+    <div className="hidden md:flex items-center gap-6">
+      <button onClick={() => setCurrentView('manifesto')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Manifesto</button>
+      <button onClick={() => setCurrentView('collective')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Coletivo</button>
+      <button onClick={() => setCurrentView('currency')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Moeda</button>
+      <button onClick={() => setCurrentView('performance')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Performance</button>
+      <button onClick={() => setCurrentView('partnership')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Parcerias</button>
+      <button className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Login</button>
+    </div>
+
+    {/* Hamburger Mobile */}
+    <button
+      className="md:hidden text-white"
+      onClick={() => setMobileMenuOpen(true)}
+    >
+      <Menu className="w-6 h-6" />
+    </button>
+
+  </div>
+</nav>
+
+{/* MOBILE SIDEBAR */}
+<div
+  className={`fixed inset-0 z-[60] transition-all duration-500 ${
+    mobileMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'
+  }`}
+>
+  {/* BACKDROP */}
+  <div
+    onClick={() => setMobileMenuOpen(false)}
+    className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-500 ${
+      mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+    }`}
+  />
+
+  {/* PANEL */}
+  <div
+    className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-off-black border-l border-white/10
+    transform transition-transform duration-500 ease-out
+    ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+    flex flex-col`}
+  >
+
+    {/* HEADER */}
+    <div className="flex justify-between items-center p-6 border-b border-white/10">
+      <img src="/lp/logo.png" className="h-6" />
+      <button onClick={() => setMobileMenuOpen(false)}>
+        <X className="w-6 h-6" />
+      </button>
+    </div>
+
+    {/* LINKS */}
+    <div className="flex flex-col gap-6 p-8 font-mono uppercase tracking-widest text-sm">
+
+      {[
+        ['Manifesto', 'manifesto'],
+        ['Coletivo', 'collective'],
+        ['Moeda', 'currency'],
+        ['Performance', 'performance'],
+        ['Parcerias', 'partnership'],
+      ].map(([label, view]) => (
+        <button
+          key={view}
+          onClick={() => {
+            setCurrentView(view as ViewState);
+            setMobileMenuOpen(false);
+          }}
+          className="text-left text-neutral-400 hover:text-white transition-colors"
+        >
+          {label}
+        </button>
+      ))}
+
+      <div className="border-t border-white/10 pt-6">
+        <button className="text-left text-neutral-400 hover:text-white">
+          Login
+        </button>
+      </div>
+    </div>
+
+    {/* FOOTER FX */}
+    <div className="mt-auto p-6 text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
+      FUNPACE SYSTEM ACCESS
+    </div>
+
+  </div>
+</div>
 
 <section id="manifesto" className="relative h-screen flex flex-col justify-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -102,7 +238,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
       </section>
 
       {/* II. The Social Pillar (The Collective) */}
-      <section id="collective" className="py-5 px-6 border-t border-white/5 bg-off-black relative">
+      <section id="collective" className="py-10 px-6 border-t border-white/5 bg-off-black relative">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-10">
@@ -121,11 +257,15 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
 
               <div className="flex gap-4 pt-4">
                  <div className="flex -space-x-4">
-                    {[1, 2, 3, 4].map(i => (
-                      <div key={i} className="w-12 h-12 rounded-full border-2 border-off-black bg-neutral-800 overflow-hidden grayscale hover:grayscale-0 transition-all duration-300 z-0 hover:z-10 hover:scale-110 cursor-pointer">
-                          <img src={`https://i.pravatar.cc/100?u=${i + 20}`} className="w-full h-full object-cover" />
+                      <div className="w-12 h-12 rounded-full border-2 border-off-black bg-neutral-800 overflow-hidden grayscale hover:grayscale-0 transition-all duration-300 z-0 hover:z-10 hover:scale-110 cursor-pointer">
+                        <img src="/lp/img/founders/03.png" className="w-full h-full object-cover" />
                       </div>
-                    ))}
+                      <div className="w-12 h-12 rounded-full border-2 border-off-black bg-neutral-800 overflow-hidden grayscale hover:grayscale-0 transition-all duration-300 z-0 hover:z-10 hover:scale-110 cursor-pointer">
+                        <img src="/lp/img/founders/02.png" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full border-2 border-off-black bg-neutral-800 overflow-hidden grayscale hover:grayscale-0 transition-all duration-300 z-0 hover:z-10 hover:scale-110 cursor-pointer">
+                        <img src="/lp/img/founders/01.png" className="w-full h-full object-cover" />
+                      </div>
                  </div>
                  <div className="flex flex-col justify-center">
                     <span className="text-lg font-display leading-none text-white">1k+</span>
@@ -148,7 +288,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
       </section>
 
       {/* III. Gamification (The Currency of Effort) */}
-      <section id="currency" className="py-5 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
+      <section id="currency" className="py-10 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-cobalt-blue/20 via-transparent to-transparent pointer-events-none" />
         
         <div className="max-w-7xl mx-auto">
@@ -212,7 +352,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
       </section>
 
       {/* IV. Performance (The Science of Progress) */}
-      <section id="performance" className="py-5 px-6 border-t border-white/5 bg-off-black">
+      <section id="performance" className="py-10 px-6 border-t border-white/5 bg-off-black">
         <div className="max-w-7xl mx-auto space-y-20">
           <div className="flex flex-col md:flex-row justify-between items-end gap-10">
              <div className="space-y-6 max-w-2xl">
@@ -254,7 +394,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
       </section>
 
       {/* V. Membership Loop / Social Proof */}
-      <section className="py-40 px-6 bg-white text-black text-center relative overflow-hidden">
+      <section className="py-10 px-6 bg-white text-black text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10" />
         <div className="max-w-4xl mx-auto relative z-10 space-y-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full border border-black/10">
@@ -263,7 +403,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
           </div>
           
           <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display uppercase tracking-tighter leading-[0.8]">
-            Junte-se ao <br/>
+            Entre no <br/>
             Ecossistema.
           </h2>
           
@@ -283,10 +423,6 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
           <button className="bg-black text-white px-12 py-5 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-neon-volt hover:text-black transition-all duration-300 shadow-2xl">
             Solicitar Acesso Antecipado
           </button>
-          
-          <p className="text-[10px] font-mono uppercase text-neutral-500 tracking-widest">
-            Disponível para iOS & Android
-          </p>
         </div>
       </section>
 
