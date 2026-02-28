@@ -113,7 +113,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
 
     {/* Logo */}
     <div className="flex items-center gap-2 cursor-pointer">
-      <img src="/lp/logo.png" alt="FUNPACE" className="h-3 object-contain" />
+      <img src="/lp/logo-tm.png" alt="FUNPACE" className="h-3 object-contain" />
     </div>
 
     {/* Desktop Nav */}
