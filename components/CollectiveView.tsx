@@ -57,10 +57,10 @@ const CollectiveView: React.FC<Props> = ({ onBack }) => {
                   alt="Community member"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
-                <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/90 to-transparent">
+                {/* <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/90 to-transparent">
                   <p className="text-[10px] font-mono text-cobalt-blue uppercase tracking-widest">Esquadrão #{i}01</p>
                   <p className="text-sm font-bold uppercase text-white">Divisão de Elite</p>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
