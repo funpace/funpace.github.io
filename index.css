@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-off-black: #0A0A0A;
+  --color-neon-volt: #CCFF00;
+  --color-cobalt-blue: #0055FF;
+  --font-display: "Archivo Black", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+    --neon-blue: #00f3ff;
+    --neon-pink: #ff00ff;
+    --neon-purple: #bc13fe;
+    --neon-lime: #39ff14;
+    --neon-cyan: #0ff0fc;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+html.dark body {
+    background-color: #020617;
+    color: #f1f5f9;
+}
+
+/* New Glassmorphism logic */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 28px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+html.dark .glass-panel {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+.glass-panel:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+html.dark .glass-panel:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    gap: 1.5rem;
+}
+
+/* Glowing utilities */
+.glow-cyan { box-shadow: 0 0 30px rgba(6, 182, 212, 0.15); }
+.glow-pink { box-shadow: 0 0 30px rgba(219, 39, 119, 0.15); }
+.glow-lime { box-shadow: 0 0 30px rgba(101, 163, 13, 0.15); }
+
+.fun-text-gradient {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes slide-in-rail {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-rail { animation: slide-in-rail 0.6s ease-out forwards; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+html.dark ::-webkit-scrollbar-track { background: #020617; }
+html.dark ::-webkit-scrollbar-thumb { background: #1e293b; }
