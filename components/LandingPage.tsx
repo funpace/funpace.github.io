@@ -12,12 +12,13 @@ import { Menu, X } from 'lucide-react';
 interface Props {
   onJoin: () => void;
   onLogin: () => void;
+  onCheckout: () => void;
   theme: 'dark' | 'light';
 }
 
 type ViewState =  'manifesto' | 'collective' | 'performance' | 'currency' | 'partnership';
 
-const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
+const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showNav, setShowNav] = useState(true);
@@ -123,6 +124,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
       <button onClick={() => setCurrentView('currency')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Moeda</button>
       <button onClick={() => setCurrentView('performance')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Performance</button>
       <button onClick={() => setCurrentView('partnership')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Parcerias</button>
+      <a href="#teste" className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Teste</a>
       <button className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Login</button>
     </div>
 
@@ -188,6 +190,14 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
           {label}
         </button>
       ))}
+
+      <a
+        href="#teste"
+        onClick={() => setMobileMenuOpen(false)}
+        className="text-left text-neutral-400 hover:text-white transition-colors"
+      >
+        Teste
+      </a>
 
       <div className="border-t border-white/10 pt-6">
         <button className="text-left text-neutral-400 hover:text-white">
@@ -426,7 +436,10 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin }) => {
              ))}
           </div>
 
-          <button className="bg-black text-white px-12 py-5 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-neon-volt hover:text-black transition-all duration-300 shadow-2xl">
+          <button
+            onClick={onCheckout}
+            className="bg-black text-white px-12 py-5 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-neon-volt hover:text-black transition-all duration-300 shadow-2xl"
+          >
             Solicitar Acesso Antecipado
           </button>
         </div>
