@@ -236,11 +236,12 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
               Unindo a força da comunidade, a dopamina do jogo e a precisão do treino. Bem-vindo ao FUNPACE.
             </p>
             <div className="max-w-7xl mx-auto w-full relative z-10 pt-[clamp(0.5rem,2vh,5rem)] flex justify-center">
-              <button className="group relative px-5 py-3 md:px-8 md:py-4 bg-white text-black overflow-hidden rounded-sm w-fit">
+              <button onClick={onCheckout} className="group relative px-5 py-3 md:px-8 md:py-4 bg-white text-black overflow-hidden rounded-sm w-fit">
                 <div className="absolute inset-0 w-full h-full bg-neon-volt translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 <span className="relative flex items-center gap-3 md:gap-4 text-xs md:text-sm font-bold uppercase tracking-[0.2em] group-hover:text-black transition-colors">
                   [ JUNTE-SE AO CLUBE ] <ArrowRight className="w-4 h-4" />
                 </span>
+                
               </button>
             </div>
           </div>

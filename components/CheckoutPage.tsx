@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 
 interface Props {
@@ -6,22 +6,48 @@ interface Props {
   plan: 'run' | 'pro';
 }
 
+type BillingCycle = 'trimestral' | 'semestral' | 'anual';
+
 interface CheckoutResponse {
   checkout_url: string;
-  payment_id: string;
+  payment_id: number;
+  payment_status_url: string;
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
 
 const PLAN_DETAILS = {
-  run: { name: 'FunPace Run', amountLabel: 'R$ 119/mês' },
-  pro: { name: 'FunPace Pro', amountLabel: 'R$ 149/mês' },
+  run: { name: 'FunPace Run', monthlyCents: 11_900 },
+  pro: { name: 'FunPace Pro', monthlyCents: 14_900 },
 } as const;
+
+const BILLING_CYCLE_DETAILS: Record<BillingCycle, { label: string; months: number; installments: number[] }> = {
+  trimestral: { label: 'Trimestral', months: 3, installments: [1, 3] },
+  semestral: { label: 'Semestral', months: 6, installments: [1, 3, 6] },
+  anual: { label: 'Anual', months: 12, installments: [1, 3, 6, 12] },
+};
+
+const formatCurrency = (amountCents: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(amountCents / 100);
+};
+
+const installmentLabel = (count: number, amountCents: number) => {
+  if (count === 1) {
+    return `1x de ${formatCurrency(amountCents)} (à vista)`;
+  }
+
+  return `${count}x de ${formatCurrency(Math.round(amountCents / count))}`;
+};
 
 const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
   const [step, setStep] = useState<1 | 2>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('trimestral');
+  const [installments, setInstallments] = useState(1);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -34,6 +60,22 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [complement, setComplement] = useState('');
+
+  const cycleDetails = BILLING_CYCLE_DETAILS[billingCycle];
+  const totalAmountCents = useMemo(
+    () => PLAN_DETAILS[plan].monthlyCents * cycleDetails.months,
+    [plan, cycleDetails.months],
+  );
+  const installmentAmountCents = useMemo(
+    () => Math.round(totalAmountCents / installments),
+    [totalAmountCents, installments],
+  );
+
+  useEffect(() => {
+    if (!cycleDetails.installments.includes(installments)) {
+      setInstallments(cycleDetails.installments[0]);
+    }
+  }, [cycleDetails.installments, installments]);
 
   const goToAddressStep = (event: React.FormEvent) => {
     event.preventDefault();
@@ -54,6 +96,8 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
         },
         body: JSON.stringify({
           plan,
+          billing_cycle: billingCycle,
+          installments,
           customer: {
             name,
             email,
@@ -115,7 +159,7 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
           <div className="mt-4 inline-flex items-center gap-3 border border-neon-volt/40 bg-neon-volt/10 px-4 py-2">
             <span className="text-[10px] font-mono uppercase tracking-widest text-neon-volt">Plano</span>
             <span className="text-sm font-bold">{PLAN_DETAILS[plan].name}</span>
-            <span className="text-xs text-neutral-300">{PLAN_DETAILS[plan].amountLabel}</span>
+            <span className="text-xs text-neutral-300">Mensal {formatCurrency(PLAN_DETAILS[plan].monthlyCents)}</span>
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-2 text-[10px] font-mono uppercase tracking-widest">
@@ -129,6 +173,54 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
 
           {step === 1 ? (
             <form onSubmit={goToAddressStep} className="mt-8 space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="billingCycle" className="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-2">
+                    Plano de pagamento
+                  </label>
+                  <select
+                    id="billingCycle"
+                    value={billingCycle}
+                    onChange={(event) => setBillingCycle(event.target.value as BillingCycle)}
+                    className="w-full bg-black/30 border border-white/20 px-4 py-3 outline-none focus:border-neon-volt transition-colors"
+                  >
+                    {Object.entries(BILLING_CYCLE_DETAILS).map(([key, value]) => (
+                      <option key={key} value={key}>
+                        {value.label} ({value.months} meses)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="installments" className="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-2">
+                    Parcelamento cartão
+                  </label>
+                  <select
+                    id="installments"
+                    value={installments}
+                    onChange={(event) => setInstallments(Number(event.target.value))}
+                    className="w-full bg-black/30 border border-white/20 px-4 py-3 outline-none focus:border-neon-volt transition-colors"
+                  >
+                    {cycleDetails.installments.map((option) => (
+                      <option key={option} value={option}>
+                        {installmentLabel(option, totalAmountCents)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="border border-white/20 bg-black/30 p-4 text-xs text-neutral-300 space-y-1">
+                <p className="font-mono uppercase tracking-widest text-neutral-400">Resumo do Pagamento</p>
+                <p>
+                  {cycleDetails.label}: {formatCurrency(totalAmountCents)}
+                </p>
+                <p>
+                  Parcelamento: {installments}x de {formatCurrency(installmentAmountCents)}
+                </p>
+              </div>
+
               <div>
                 <label htmlFor="name" className="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-2">
                   Nome completo

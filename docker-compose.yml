@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: funpace_db
+    environment:
+      POSTGRES_DB: funpace_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d funpace_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app_net
+
+  api:
+    build:
+      context: ./api
+    container_name: funpace_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@db:5432/funpace_development
+      TEST_DATABASE_URL: postgres://postgres:postgres@db:5432/funpace_test
+      CHECKOUT_TEST_AMOUNT_CENTS: ${CHECKOUT_TEST_AMOUNT_CENTS:-}
+      FRONTEND_ORIGINS: http://localhost:3000,http://localhost:5173
+      INFINITEPAY_BASE_URL: https://api.infinitepay.io
+      INFINITEPAY_CAPTURE_METHOD: ${INFINITEPAY_CAPTURE_METHOD:-credit_card}
+      INFINITEPAY_HANDLE: ${INFINITEPAY_HANDLE:-}
+      INFINITEPAY_WEBHOOK_URL: ${INFINITEPAY_WEBHOOK_URL:-http://localhost:3001/api/v1/payments/webhooks/infinitepay}
+      INFINITEPAY_REDIRECT_URL: ${INFINITEPAY_REDIRECT_URL:-http://localhost:3000/#checkout-success}
+    ports:
+      - "3001:3000"
+    command: ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+    networks:
+      - app_net
+
+volumes:
+  postgres_data:
+
+networks:
+  app_net:
+    driver: bridge
