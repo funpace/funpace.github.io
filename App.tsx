@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import LandingPage from './components/LandingPage';
 import CheckoutPage from './components/CheckoutPage';
 import PlansPage from './components/PlansPage';
+import CheckoutSuccessPage from './components/CheckoutSuccessPage';
 
-type PublicRoute = 'landing' | 'planos' | 'checkout';
+type PublicRoute = 'landing' | 'planos' | 'checkout' | 'checkout-success';
 type PlanType = 'run' | 'pro';
 
 const App: React.FC = () => {
   const [publicRoute, setPublicRoute] = useState<PublicRoute>(() => {
+    if (window.location.hash === '#checkout-success') return 'checkout-success';
     if (window.location.hash === '#checkout') return 'checkout';
     if (window.location.hash === '#planos') return 'planos';
     return 'landing';
@@ -16,6 +18,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleHashChange = () => {
+      if (window.location.hash === '#checkout-success') {
+        setPublicRoute('checkout-success');
+        return;
+      }
       if (window.location.hash === '#checkout') {
         setPublicRoute('checkout');
         return;
@@ -55,6 +61,10 @@ const App: React.FC = () => {
 
   if (publicRoute === 'checkout') {
     return <CheckoutPage onBack={openplanos} plan={selectedPlan} />;
+  }
+
+  if (publicRoute === 'checkout-success') {
+    return <CheckoutSuccessPage onGoToPlans={openplanos} onGoToHome={openLanding} />;
   }
 
   return <LandingPage onJoin={() => {}} onLogin={() => {}} onCheckout={openplanos} theme="dark" />;
