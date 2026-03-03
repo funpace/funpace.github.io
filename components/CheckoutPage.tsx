@@ -14,7 +14,7 @@ interface CheckoutResponse {
   payment_status_url: string;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://funapp-api-g4ue.onrender.com';
 
 const PLAN_DETAILS = {
   run: { name: 'FunPace Run', monthlyCents: 11_900 },

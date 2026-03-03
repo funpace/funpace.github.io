@@ -30,7 +30,7 @@ services:
       CHECKOUT_TEST_AMOUNT_CENTS: ${CHECKOUT_TEST_AMOUNT_CENTS:-}
       FRONTEND_ORIGINS: http://localhost:3000,http://localhost:5173
       INFINITEPAY_BASE_URL: https://api.infinitepay.io
-      INFINITEPAY_CAPTURE_METHOD: ${INFINITEPAY_CAPTURE_METHOD:-credit_card}
+      INFINITEPAY_CAPTURE_METHOD: ${INFINITEPAY_CAPTURE_METHOD:-all}
       INFINITEPAY_HANDLE: ${INFINITEPAY_HANDLE:-}
       INFINITEPAY_WEBHOOK_URL: ${INFINITEPAY_WEBHOOK_URL:-http://localhost:3001/api/v1/payments/webhooks/infinitepay}
       INFINITEPAY_REDIRECT_URL: ${INFINITEPAY_REDIRECT_URL:-http://localhost:3000/#checkout-success}
