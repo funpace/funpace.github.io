@@ -199,11 +199,11 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
         Teste
       </a> */}
 
-      <div className="border-t border-white/10 pt-6">
+      {/* <div className="border-t border-white/10 pt-6"> */}
         <button className="text-left text-neutral-400 hover:text-white">
           Login
         </button>
-      </div>
+      {/* </div> */}
     </div>
 
     {/* FOOTER FX */}
