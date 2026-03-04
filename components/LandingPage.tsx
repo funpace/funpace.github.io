@@ -172,7 +172,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
     {/* LINKS */}
     <div className="flex flex-col gap-6 p-8 font-mono uppercase tracking-widest text-sm">
 
-      {[
+      {/* {[
         ['Manifesto', 'manifesto'],
         ['Coletivo', 'collective'],
         ['Moeda', 'currency'],
@@ -189,15 +189,15 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
         >
           {label}
         </button>
-      ))}
+      ))} */}
 
-      <a
+      {/* <a
         href="#teste"
         onClick={() => setMobileMenuOpen(false)}
         className="text-left text-neutral-400 hover:text-white transition-colors"
       >
         Teste
-      </a>
+      </a> */}
 
       <div className="border-t border-white/10 pt-6">
         <button className="text-left text-neutral-400 hover:text-white">
