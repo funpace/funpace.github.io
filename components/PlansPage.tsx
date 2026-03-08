@@ -61,16 +61,28 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
 
             <div className="space-y-4 mb-8 flex-1">
               {[
-                "Kit de boas-vindas + camiseta do clube",
-                "Long Run mensal",
-                "Grupo fechado Run",
+                // "Kit de boas-vindas + camiseta do clube",
+                // "Long Run mensal",
+                // "Grupo fechado Run",
+                // "Missões semanais",
+                // "Challenges mensais",
+                // "Desconto Pré Venda Coffee Party Club",
+                // "Prioridade na compra de drops",
+                // "Planilhas de treino por nível",
+                // "Medalhas digitais de performance",
+                // "Ranking interno"
+                "Kit de boas-vindas + camiseta do clube"
+                "Treinões Funpace",
+                "Long Run",
                 "Missões semanais",
                 "Challenges mensais",
-                "Desconto Pré Venda Coffee Party Club",
-                "Prioridade na compra de drops",
-                "Planilhas de treino por nível",
+                "Desconto Pré Coffee Party Club",
+                "Prioridade na compra de drops da coleção Funpace",
+                "Planilhas de treino",
                 "Medalhas digitais de performance",
-                "Ranking interno"
+                "Ranking interno",
+                "Planilha de treino personalizada",
+                "Feedback do Coach e planejamento semanal 1x na semana"
               ].map((feature, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-neutral-500 mt-0.5 shrink-0" />
@@ -119,11 +131,16 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
                 Tudo do plano RUN +
               </div>
               {[
-                "Acesso aos workshops mensais",
-                "Descontos em eventos pagos",
-                "Acesso antecipado aos lançamentos",
-                "Prioridade máxima em drops",
-                "Conteúdo exclusivo de performance"
+                // "Acesso aos workshops mensais",
+                // "Descontos em eventos pagos",
+                // "Acesso antecipado aos lançamentos",
+                // "Prioridade máxima em drops",
+                // "Conteúdo exclusivo de performance"
+                "Planejamento de provas ciclo de treinamento: Semestral",
+                "Acesso a workshops e palestras",
+                "Descontos em eventos parceiros",
+                "Acesso antecipado a lançamentos dos patrocinadores",
+                "Conteúdo exclusivo de performance",
               ].map((feature, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <div className="bg-neon-volt/10 p-0.5 rounded-full">
