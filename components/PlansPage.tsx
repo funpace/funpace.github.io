@@ -61,17 +61,7 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
 
             <div className="space-y-4 mb-8 flex-1">
               {[
-                // "Kit de boas-vindas + camiseta do clube",
-                // "Long Run mensal",
-                // "Grupo fechado Run",
-                // "Missões semanais",
-                // "Challenges mensais",
-                // "Desconto Pré Venda Coffee Party Club",
-                // "Prioridade na compra de drops",
-                // "Planilhas de treino por nível",
-                // "Medalhas digitais de performance",
-                // "Ranking interno"
-                "Kit de boas-vindas + camiseta do clube"
+                "Kit de boas-vindas + camiseta do clube",
                 "Treinões Funpace",
                 "Long Run",
                 "Missões semanais",
@@ -131,11 +121,6 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
                 Tudo do plano RUN +
               </div>
               {[
-                // "Acesso aos workshops mensais",
-                // "Descontos em eventos pagos",
-                // "Acesso antecipado aos lançamentos",
-                // "Prioridade máxima em drops",
-                // "Conteúdo exclusivo de performance"
                 "Planejamento de provas ciclo de treinamento: Semestral",
                 "Acesso a workshops e palestras",
                 "Descontos em eventos parceiros",
