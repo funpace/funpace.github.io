@@ -391,7 +391,7 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="city" className="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-2">
                     Cidade
@@ -420,7 +420,7 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
                     placeholder="SP"
                   />
                 </div>
-              </div>
+              </div> */}
 
               {error && <p className="text-red-400 text-sm">{error}</p>}
 
