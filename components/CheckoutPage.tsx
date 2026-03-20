@@ -90,9 +90,7 @@ const CheckoutPage: React.FC<Props> = ({ onBack, plan }) => {
       !zipCode.trim() ||
       !street.trim() ||
       !number.trim() ||
-      !neighborhood.trim() ||
-      !city.trim() ||
-      !state.trim()
+      !neighborhood.trim()
     ) {
       return 'Preencha todos os campos de endereço.';
     }
