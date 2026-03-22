@@ -125,7 +125,7 @@ const LandingPage: React.FC<Props> = ({ onJoin, onLogin, onCheckout }) => {
       <button onClick={() => setCurrentView('performance')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Performance</button>
       <button onClick={() => setCurrentView('partnership')} className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Parcerias</button>
       <a href="#teste" className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Teste</a> */}
-      <button className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Login</button>
+      <a href="https://funpace.github.io/painel/" className="text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Login</a>
     </div>
 
     {/* Hamburger Mobile */}
