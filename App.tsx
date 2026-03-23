@@ -5,7 +5,7 @@ import PlansPage from './components/PlansPage';
 import CheckoutSuccessPage from './components/CheckoutSuccessPage';
 
 type PublicRoute = 'landing' | 'planos' | 'checkout' | 'checkout-success';
-type PlanType = 'run' | 'pro';
+type PlanType = 'run' | 'pro' | 'familia';
 
 const App: React.FC = () => {
   const [publicRoute, setPublicRoute] = useState<PublicRoute>(() => {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ArrowLeft, Check, Zap, Crown, Star } from 'lucide-react';
+import { ArrowLeft, Check, Zap, Crown, Home } from 'lucide-react';
 
 interface Props {
   onBack: () => void;
-  onSelectPlan: (plan: 'run' | 'pro') => void;
+  onSelectPlan: (plan: 'run' | 'pro' | 'familia') => void;
 }
 
 const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
@@ -40,11 +40,11 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
         </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* FUNPACE RUN */}
           <div className="relative bg-neutral-900/50 border border-white/10 rounded-2xl p-8 hover:border-white/30 transition-all duration-300 group flex flex-col">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-neutral-800 border border-white/10 px-4 py-1 rounded-full">
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-300">🥈 FunPace Run</span>
+              <span className="text-xs font-mono uppercase tracking-widest text-neutral-300">FunPace Run</span>
             </div>
             
             <div className="text-center mb-8 mt-4">
@@ -100,7 +100,7 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-neon-volt text-black px-4 py-1 rounded-full shadow-[0_0_15px_rgba(204,255,0,0.4)]">
               <span className="text-xs font-bold font-mono uppercase tracking-widest flex items-center gap-2">
                 <Crown className="w-3 h-3" />
-                🥇 FunPace Pro
+                FunPace Pro
               </span>
             </div>
             
@@ -146,6 +146,80 @@ const PlansPage: React.FC<Props> = ({ onBack, onSelectPlan }) => {
               
               <p className="text-[10px] text-center text-neutral-500 mt-4 font-mono uppercase tracking-wider">
                 A experiência definitiva
+              </p>
+            </div>
+          </div>
+          {/* PLANO FAMÍLIA */}
+          <div className="relative bg-neutral-900/80 border border-orange-400/30 rounded-2xl p-8 hover:border-orange-400 transition-all duration-300 group shadow-[0_0_30px_rgba(251,146,60,0.05)] flex flex-col">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-orange-400 text-black px-4 py-1 rounded-full shadow-[0_0_15px_rgba(251,146,60,0.4)]">
+              <span className="text-xs font-bold font-mono uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
+                <Home className="w-3 h-3" />
+                Plano Família
+              </span>
+            </div>
+
+            <div className="text-center mb-8 mt-4">
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-sm text-neutral-400">R$</span>
+                <span className="text-5xl font-display tracking-tight text-white">149</span>
+                <span className="text-sm text-neutral-400">/mês titular</span>
+              </div>
+              <div className="flex items-baseline justify-center gap-1 mt-1">
+                <span className="text-xs text-orange-300">+</span>
+                <span className="text-sm text-orange-300 font-display">R$ 89</span>
+                <span className="text-xs text-neutral-500">/mês por dependente</span>
+              </div>
+              <p className="text-xs text-neutral-500 mt-2 font-mono uppercase tracking-wider">
+                Até 3 dependentes
+              </p>
+            </div>
+
+            <div className="space-y-4 mb-8 flex-1">
+              <div className="flex items-center gap-2 text-orange-400 text-xs font-mono uppercase tracking-widest mb-2">
+                <Crown className="w-3 h-3" />
+                1 Titular — Plano Pro
+              </div>
+              {[
+                "Todos os benefícios do FunPace Pro",
+                "Planejamento ciclo semestral de provas",
+                "Workshops, palestras e conteúdo exclusivo",
+              ].map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="bg-orange-400/10 p-0.5 rounded-full">
+                    <Check className="w-3 h-3 text-orange-400 shrink-0" />
+                  </div>
+                  <span className="text-sm text-white font-medium">{feature}</span>
+                </div>
+              ))}
+
+              <div className="flex items-center gap-2 text-orange-300 text-xs font-mono uppercase tracking-widest mt-4 mb-2 pt-2 border-t border-white/5">
+                <Home className="w-3 h-3" />
+                Dependentes — Plano Run
+              </div>
+              {[
+                "Acesso aos Treinões, Long Run e Missões",
+                "Planilhas e medalhas digitais",
+                "Ranking interno + kit de boas-vindas",
+              ].map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="bg-orange-400/10 p-0.5 rounded-full">
+                    <Check className="w-3 h-3 text-orange-300 shrink-0" />
+                  </div>
+                  <span className="text-sm text-neutral-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-auto">
+              <button
+                onClick={() => onSelectPlan('familia')}
+                className="w-full py-4 bg-orange-400 text-black font-bold uppercase tracking-widest text-xs hover:bg-orange-300 transition-colors rounded-sm shadow-[0_0_20px_rgba(251,146,60,0.2)] hover:shadow-[0_0_30px_rgba(251,146,60,0.4)]"
+              >
+                Quero o Plano Família
+              </button>
+
+              <p className="text-[10px] text-center text-neutral-500 mt-4 font-mono uppercase tracking-wider">
+                Corra junto com quem você ama
               </p>
             </div>
           </div>
